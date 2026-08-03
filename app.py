@@ -17,7 +17,7 @@ DATA_DIR = APP_DIR / "data"
 
 AUTHOR_NAME = "James Yan"
 MENTOR_NAME = "Dr. Qingyang Xiao"
-# APP_VERSION = "v2026.08"
+APP_VERSION = "v2026.08"
 
 st.set_page_config(
     page_title="James AI Journal Club",
