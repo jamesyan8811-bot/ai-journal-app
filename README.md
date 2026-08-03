@@ -1,86 +1,87 @@
 # James AI Journal Club App
 
-A Streamlit prototype for an AI-based journal club founded by James. The app helps high-school students discover frontier AI videos, subscribe to tutorials, discuss AI topics, and experience a simple AI brain that personalizes recommendations.
+A GitHub- and Streamlit-ready prototype for an AI journal club founded by **James Yan** and mentored by **Dr. Qingyang Xiao**.
 
-**Author and Founder:** James Yan  
-**Mentor:** Dr. Qingyang Xiao
+This version combines:
 
-## What is included
-
-- `app.py` - Streamlit website app with author and mentor credits in the sidebar and an About the Team page.
-- `data/` - Sample CSV data for videos, sessions, member profiles, interactions, and discussion threads.
-- `notebooks/AI_Journal_Club_App_Colab.ipynb` - Colab-friendly notebook that demonstrates the core AI concepts.
-- `requirements.txt` - Python packages needed to run locally or on Streamlit Community Cloud.
-- `.streamlit/config.toml` - Basic Streamlit theme configuration.
+1. The original Python/Streamlit AI core.
+2. The dark cyan-violet neo-digital UI language from the uploaded design package.
 
 ## Main features
 
-1. **Frontier AI video library**
-   - AI agents, deep learning, reinforcement learning, RAG, multimodal AI, AI safety, generative AI, and deployment.
-   - Each item has a high-school level summary and a resource link.
+- Frontier AI video library and personalized recommendations
+- Transparent hybrid recommender using supervised ML, TF-IDF similarity, topic fit, freshness, and feedback rewards
+- AI session subscriptions
+- Discussion channels and demo post creation
+- High-school-level AI explanation engine
+- Reinforcement-style preference updates from likes and dislikes
+- Team, responsible-AI, GitHub, and Streamlit deployment pages
+- Colab notebook for the AI prototype pipeline
 
-2. **Session subscriptions**
-   - Students can subscribe to tutorials and workshops.
-   - Demo subscriptions are stored in Streamlit session state.
+## Project credits
 
-3. **Discussion channels**
-   - Students can post demo discussions in topic-based channels.
-   - In a production app, replace session-state posts with a database.
+- **Author and Founder:** James Yan
+- **Mentor:** Dr. Qingyang Xiao
 
-4. **AI brain**
-   - Supervised machine learning recommender predicts student interest from survey profiles and previous likes.
-   - Deep learning concept layer explains advanced topics using high-school analogies.
-   - Reinforcement learning feedback loop updates topic weights from likes and dislikes.
+Credits appear in the sidebar, main header strip, Team tabs, and footer.
+
+## Repository structure
+
+```text
+.
+├── app.py
+├── requirements.txt
+├── README.md
+├── ARCHITECTURE.md
+├── UI_INTEGRATION.md
+├── LICENSE
+├── .streamlit/
+│   └── config.toml
+├── data/
+│   ├── discussions.csv
+│   ├── interactions.csv
+│   ├── sessions.csv
+│   ├── user_profiles.csv
+│   └── videos.csv
+└── notebooks/
+    └── AI_Journal_Club_App_Colab.ipynb
+```
 
 ## Run locally
 
 ```bash
 python -m venv .venv
+```
+
+macOS/Linux:
+
+```bash
 source .venv/bin/activate
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
-python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Deploy to Streamlit Community Cloud
+## Deploy on Streamlit Community Cloud
 
-1. Create a GitHub repository, for example `ai-journal-club-app`.
-2. Upload all files from this folder.
-3. Go to Streamlit Community Cloud.
-4. Select the GitHub repo.
-5. Set the main file path to `app.py`.
-6. Deploy.
+1. Create a new GitHub repository.
+2. Upload the **contents** of this ZIP to the repository root.
+3. In Streamlit Community Cloud, create a new app from the repository.
+4. Set the main file path to `app.py`.
+5. Deploy.
 
-## Use the notebook in Google Colab
+No API key or paid service is required for this prototype.
 
-1. Open `notebooks/AI_Journal_Club_App_Colab.ipynb` in Colab.
-2. Run the setup cell.
-3. Run each section to see how the supervised ML, neural-network concept layer, and reinforcement-learning feedback loop work.
+## Prototype limitations
 
-## Important production notes
-
-This is a portfolio prototype. Before using it with real students, add:
-
-- Parent or school-approved privacy policy.
-- Strong moderation for discussions.
-- Secure login.
-- Database storage.
-- Data deletion controls.
-- Human review of learning content.
-- Clear labels for AI-generated explanations.
-
-## Suggested future upgrades
-
-- Replace sample video links with the club's curated video database.
-- Add an admin upload page for new videos and tutorials.
-- Add RAG over club notes and approved articles.
-- Add learning badges and progress dashboards.
-- Add teacher moderation and safety reports.
+- Likes, subscriptions, and new posts use browser session state and reset when the session ends.
+- Video links are sample search/resource links.
+- The explanation engine is template-based and does not call a commercial LLM.
+- A production student platform should add login, database storage, moderation, privacy controls, and human content review.
