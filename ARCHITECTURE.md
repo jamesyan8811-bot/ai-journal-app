@@ -1,3 +1,8 @@
+## Project Credits
+
+- Author and Founder: James Yan
+- Mentor: Dr. Qingyang Xiao
+
 # AI Brain Architecture
 
 ```text

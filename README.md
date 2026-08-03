@@ -2,9 +2,12 @@
 
 A Streamlit prototype for an AI-based journal club founded by James. The app helps high-school students discover frontier AI videos, subscribe to tutorials, discuss AI topics, and experience a simple AI brain that personalizes recommendations.
 
+**Author and Founder:** James Yan  
+**Mentor:** Dr. Qingyang Xiao
+
 ## What is included
 
-- `app.py` - Streamlit website app.
+- `app.py` - Streamlit website app with author and mentor credits in the sidebar and an About the Team page.
 - `data/` - Sample CSV data for videos, sessions, member profiles, interactions, and discussion threads.
 - `notebooks/AI_Journal_Club_App_Colab.ipynb` - Colab-friendly notebook that demonstrates the core AI concepts.
 - `requirements.txt` - Python packages needed to run locally or on Streamlit Community Cloud.

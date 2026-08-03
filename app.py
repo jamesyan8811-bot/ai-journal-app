@@ -14,6 +14,9 @@ from sklearn.pipeline import Pipeline
 APP_DIR = Path(__file__).parent
 DATA_DIR = APP_DIR / "data"
 
+AUTHOR_NAME = "James Yan"
+MENTOR_NAME = "Dr. Qingyang Xiao"
+
 st.set_page_config(
     page_title="James AI Journal Club",
     layout="wide",
@@ -261,9 +264,21 @@ def main() -> None:
     threads = data["threads"]
 
     st.sidebar.title("James AI Journal Club")
+    st.sidebar.markdown(
+        f"**Author:** {AUTHOR_NAME}  \n**Mentor:** {MENTOR_NAME}"
+    )
+    st.sidebar.divider()
     page = st.sidebar.radio(
         "Explore",
-        ["Home", "Video Recommender", "Sessions", "Discussion Channels", "AI Brain Lab", "Portfolio Notes"],
+        [
+            "Home",
+            "Video Recommender",
+            "Sessions",
+            "Discussion Channels",
+            "AI Brain Lab",
+            "About the Team",
+            "Portfolio Notes",
+        ],
     )
     st.sidebar.caption("Prototype app for a high-school AI journal club.")
 
@@ -456,8 +471,49 @@ Reinforcement learning feedback loop from likes/dislikes/subscriptions
         st.checkbox("Use human review before publishing official learning content.", value=True)
         st.checkbox("Avoid collecting sensitive personal data from minors.", value=True)
 
+    elif page == "About the Team":
+        st.title("About the Team")
+        st.markdown(
+            f"""
+            ### Author and Founder
+            **{AUTHOR_NAME}**
+
+            James Yan founded the AI Journal Club and leads its mission to make frontier AI
+            ideas understandable, engaging, and useful for high-school students.
+
+            ### Mentor
+            **{MENTOR_NAME}**
+
+            Dr. Qingyang Xiao mentors the project architecture, AI prototyping, data-driven
+            recommendation design, responsible-AI planning, and portfolio development.
+
+            ### Project Mission
+            The team is building a student-centered learning community where members can
+            discover current AI resources, subscribe to tutorials, exchange ideas, and learn
+            how machine learning, deep learning, and feedback-driven personalization work.
+            """
+        )
+
+        st.subheader("Roles in this prototype")
+        role_table = pd.DataFrame(
+            [
+                {
+                    "Role": "Author and Founder",
+                    "Name": AUTHOR_NAME,
+                    "Focus": "Journal-club vision, student community, content direction, and portfolio ownership",
+                },
+                {
+                    "Role": "Mentor",
+                    "Name": MENTOR_NAME,
+                    "Focus": "AI architecture, prototype development, responsible AI, and technical guidance",
+                },
+            ]
+        )
+        st.dataframe(role_table, use_container_width=True, hide_index=True)
+
     elif page == "Portfolio Notes":
         st.title("GitHub and Streamlit Portfolio Notes")
+        st.caption(f"Author: {AUTHOR_NAME} | Mentor: {MENTOR_NAME}")
         st.markdown(
             """
             Use this prototype as a portfolio-ready starting point.
