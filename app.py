@@ -17,7 +17,7 @@ DATA_DIR = APP_DIR / "data"
 
 AUTHOR_NAME = "James Yan"
 MENTOR_NAME = "Dr. Qingyang Xiao"
-APP_VERSION = "v2026.08"
+# APP_VERSION = "v2026.08"
 
 st.set_page_config(
     page_title="James AI Journal Club",
@@ -926,7 +926,7 @@ def sidebar() -> str:
 def render_home(videos: pd.DataFrame, sessions: pd.DataFrame, threads: pd.DataFrame, users: pd.DataFrame) -> None:
     top_strip("system.overview")
     page_header(
-        "// system.overview",
+        # "// system.overview",
         "James AI Journal Club",
         "A future-facing learning community where students discover frontier AI videos, subscribe to tutorials, discuss ideas, and see how an AI brain personalizes learning.",
     )
