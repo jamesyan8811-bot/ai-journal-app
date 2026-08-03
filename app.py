@@ -926,7 +926,7 @@ def sidebar() -> str:
 def render_home(videos: pd.DataFrame, sessions: pd.DataFrame, threads: pd.DataFrame, users: pd.DataFrame) -> None:
     top_strip("system.overview")
     page_header(
-        # "// system.overview",
+        "// system.overview",
         "James AI Journal Club",
         "A future-facing learning community where students discover frontier AI videos, subscribe to tutorials, discuss ideas, and see how an AI brain personalizes learning.",
     )
