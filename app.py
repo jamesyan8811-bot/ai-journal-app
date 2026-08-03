@@ -17,7 +17,7 @@ DATA_DIR = APP_DIR / "data"
 
 AUTHOR_NAME = "James Yan"
 MENTOR_NAME = "Dr. Qingyang Xiao"
-APP_VERSION = "v2026.08"
+APP_VERSION = "v2026.08.1"
 
 st.set_page_config(
     page_title="James AI Journal Club",
@@ -89,9 +89,17 @@ def inject_css() -> None:
             background: transparent;
         }
 
+        /*
+         * Streamlit's toolbar/header is fixed above the app body.  The earlier
+         * 2rem top padding placed the first status line underneath that header.
+         * Keep a toolbar-safe offset so the complete top strip remains visible
+         * across current Streamlit Community Cloud releases.
+         */
+        [data-testid="stAppViewContainer"] > .main .block-container,
+        .main .block-container,
         .block-container {
             max-width: 1180px;
-            padding-top: 2rem;
+            padding-top: 5rem !important;
             padding-bottom: 4rem;
         }
 
@@ -226,6 +234,8 @@ def inject_css() -> None:
         }
 
         .top-strip {
+            position: relative;
+            z-index: 2;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -541,7 +551,9 @@ def inject_css() -> None:
         }
 
         @media (max-width: 800px) {
-            .block-container { padding-top: 1.2rem; }
+            [data-testid="stAppViewContainer"] > .main .block-container,
+            .main .block-container,
+            .block-container { padding-top: 4.5rem !important; }
             .top-strip { align-items: flex-start; flex-direction: column; }
             .page-title { font-size: 2.35rem; }
             .metric-card { min-height: 128px; }

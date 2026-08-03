@@ -32,3 +32,8 @@ Streamlit Community Cloud should launch:
 ```text
 app.py
 ```
+
+
+## Streamlit toolbar compatibility update
+
+The main content container now uses a 5rem desktop top offset and a 4.5rem mobile top offset. This prevents the fixed Streamlit toolbar from covering the top status and project-credit strip.

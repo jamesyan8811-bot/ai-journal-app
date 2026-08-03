@@ -79,6 +79,10 @@ streamlit run app.py
 
 No API key or paid service is required for this prototype.
 
+## Header visibility fix
+
+This build adds a toolbar-safe top offset for Streamlit Community Cloud. The page status line and the Author/Mentor credit line now render below the fixed Streamlit toolbar instead of being partially hidden behind it. Responsive spacing is included for desktop and mobile layouts.
+
 ## Prototype limitations
 
 - Likes, subscriptions, and new posts use browser session state and reset when the session ends.
