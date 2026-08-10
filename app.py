@@ -20,8 +20,8 @@ MENTOR_NAME = "Dr. Qingyang Xiao"
 APP_VERSION = "v2026.08.1"
 
 st.set_page_config(
-    page_title="James AI Journal Club",
-    page_icon="🧠",
+    page_title="Edvera",
+    page_icon="🌳",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -886,7 +886,7 @@ def sidebar() -> str:
             <div class="brand-mark"></div>
             <div>
                 <div class="brand-node">Node · JAJC-001</div>
-                <div class="brand-name">James AI Journal Club</div>
+                <div class="brand-name">Edvera</div>
             </div>
         </div>
         """,
@@ -939,8 +939,8 @@ def render_home(videos: pd.DataFrame, sessions: pd.DataFrame, threads: pd.DataFr
     top_strip("system.overview")
     page_header(
         "// system.overview",
-        "James AI Journal Club",
-        "A future-facing learning community where students discover frontier AI videos, subscribe to tutorials, discuss ideas, and see how an AI brain personalizes learning.",
+        "Edvera",
+        "A futuristic learning community where students discover with the help of AI, discuss ideas with eachother, and explore how Evera personalizes learning.",
     )
 
     cols = st.columns(4)
@@ -1011,7 +1011,7 @@ def render_recommender(users: pd.DataFrame, videos: pd.DataFrame, interactions: 
     top_strip("recommender.engine")
     page_header(
         "// 01 · recommender.engine",
-        "Personalized Frontier AI Videos",
+        "Personalized Videos To Support Learning",
         "A transparent hybrid recommender combines supervised learning, profile similarity, topic fit, freshness, and feedback rewards.",
     )
 
@@ -1448,7 +1448,7 @@ def main() -> None:
         render_sessions(data["sessions"])
     elif page == "Discussion Channels":
         render_discussions(data["threads"])
-    elif page == "AI Brain Lab":
+    elif page == "Evera AI":
         render_ai_brain(data["users"])
     elif page == "About the Team":
         render_team()
@@ -1456,7 +1456,7 @@ def main() -> None:
         render_portfolio()
 
     st.markdown(
-        f'<div class="footer-note">JAMES AI JOURNAL CLUB · AUTHOR {AUTHOR_NAME.upper()} · MENTOR {MENTOR_NAME.upper()} · {APP_VERSION}</div>',
+        f'<div class="footer-note">EDVERA · AUTHOR {AUTHOR_NAME.upper()} · MENTOR {MENTOR_NAME.upper()} · {APP_VERSION}</div>',
         unsafe_allow_html=True,
     )
 
