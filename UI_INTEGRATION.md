@@ -1,39 +1,60 @@
-# UI Integration Notes
+# Neo-Digital UI Integration Notes
 
-This repository integrates the **neo-digital-design** visual concept into the original **James AI Journal Club Streamlit core**.
+## Integrated source
 
-## What was integrated
+The repository includes and adapts the uploaded UI package:
 
-- Dark holographic background and cyan/violet glow system
-- Grid ambience, glass panels, corner accents, code-like labels, and gradient typography
-- Redesigned sidebar navigation and project-credit block
-- Responsive metric cards and architecture panels
-- Styled recommendation, session, discussion, AI-brain, team, and deployment views
-- Author credit: **James Yan**
-- Mentor credit: **Dr. Qingyang Xiao**
+```text
+neo-digital-design-main (1) (1).zip
+```
 
-## Core functions retained
+The original React/Vite source is retained under:
 
-- CSV-backed video, session, member, interaction, and discussion data
-- Hybrid recommendation scoring
-- Supervised TF-IDF + logistic regression prediction
-- Content/profile similarity scoring
-- Freshness and preferred-topic scoring
-- Session-state reinforcement-style feedback weights
+```text
+ui_reference/neo-digital-design-main/
+```
+
+## How the integration works
+
+The uploaded UI is a TypeScript React design, while the deployable application is a Python Streamlit app. Its visual system was therefore ported rather than requiring a separate Node server. The working AI features remain in `app.py`, and the source UI is included as a portfolio and design reference.
+
+## Visual components ported to Streamlit
+
+- Near-black, green-tinted background based on the source OKLCH tokens
+- Emerald primary and secondary glow system
+- Fixed 48-pixel ambient grid
+- Animated horizontal scanline
+- Glass-style panels and cards
+- Corner brackets and glowing card edges
+- Space Grotesk, DM Sans, and JetBrains Mono typography
+- Code-style page labels and numbered navigation
+- Gradient titles and metrics
+- Styled buttons, form controls, tabs, alerts, tables, and progress indicators
+- Responsive desktop and mobile spacing
+- Branded sidebar with author, mentor, GitHub, and live-app links
+
+## Functional core retained
+
+- CSV-backed videos, sessions, users, interactions, and discussions
+- Supervised TF-IDF plus logistic-regression recommendation model
+- Profile/content cosine similarity
+- Topic-fit and freshness scoring
+- Feedback-driven topic weights
 - Session subscriptions
-- Demo discussion posting
+- Discussion posting in session state
 - High-school-level AI explanation engine
-- Colab notebook and architecture documentation
+- Model transparency output
+- Responsible-AI checklist
+- Google Colab notebook
 
-## Deployment entry point
-
-Streamlit Community Cloud should launch:
+## Streamlit deployment entry point
 
 ```text
 app.py
 ```
 
+Node.js and Bun are not required by Streamlit Community Cloud because `ui_reference/` is not the runtime front end.
 
-## Streamlit toolbar compatibility update
+## Streamlit toolbar compatibility
 
-The main content container now uses a 5rem desktop top offset and a 4.5rem mobile top offset. This prevents the fixed Streamlit toolbar from covering the top status and project-credit strip.
+The app keeps a `5rem` desktop and `4.5rem` mobile top offset. This prevents Streamlit's fixed toolbar from hiding the top system-status and project-credit line.

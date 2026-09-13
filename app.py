@@ -17,7 +17,7 @@ DATA_DIR = APP_DIR / "data"
 
 AUTHOR_NAME = "James Yan"
 MENTOR_NAME = "Dr. Qingyang Xiao"
-APP_VERSION = "v2026.08.1"
+APP_VERSION = "v2026.09.2"
 
 st.set_page_config(
     page_title="Edvera",
@@ -28,7 +28,7 @@ st.set_page_config(
 
 
 # -----------------------------------------------------------------------------
-# UI layer adapted from the uploaded neo-digital-design concept
+# Streamlit UI adapted from the uploaded green neo-digital-design source
 # -----------------------------------------------------------------------------
 
 def inject_css() -> None:
@@ -38,18 +38,18 @@ def inject_css() -> None:
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
 
         :root {
-            --bg: #0c1020;
-            --surface: rgba(25, 31, 58, 0.72);
-            --surface-2: rgba(36, 44, 80, 0.72);
-            --text: #f3f7ff;
-            --muted: #98a2bd;
-            --cyan: #75e8ff;
-            --cyan-soft: rgba(117, 232, 255, 0.18);
-            --violet: #c8a4ff;
-            --violet-soft: rgba(200, 164, 255, 0.16);
-            --border: rgba(145, 159, 207, 0.25);
-            --danger: #ff8caa;
-            --success: #7ff2c2;
+            --bg: oklch(0.10 0.02 150);
+            --surface: oklch(0.15 0.02 150 / 0.86);
+            --surface-2: oklch(0.20 0.02 150 / 0.84);
+            --text: oklch(0.95 0.01 150);
+            --muted: oklch(0.65 0.02 150);
+            --cyan: oklch(0.70 0.22 150);
+            --cyan-soft: oklch(0.70 0.22 150 / 0.18);
+            --violet: oklch(0.55 0.18 160);
+            --violet-soft: oklch(0.55 0.18 160 / 0.16);
+            --border: oklch(0.30 0.04 150 / 0.55);
+            --danger: oklch(0.68 0.22 20);
+            --success: oklch(0.74 0.19 150);
         }
 
         html, body, [class*="css"] {
@@ -59,10 +59,10 @@ def inject_css() -> None:
         .stApp {
             color: var(--text);
             background:
-                radial-gradient(1000px 560px at 8% -12%, rgba(178, 111, 255, 0.23), transparent 62%),
-                radial-gradient(850px 520px at 108% 4%, rgba(66, 216, 255, 0.18), transparent 62%),
-                radial-gradient(720px 520px at 52% 116%, rgba(115, 92, 255, 0.13), transparent 64%),
-                linear-gradient(180deg, #0c1020 0%, #0a0e1b 100%);
+                radial-gradient(1200px 600px at 5% -10%, oklch(0.35 0.08 150 / 0.18), transparent 60%),
+                radial-gradient(900px 500px at 110% 10%, oklch(0.40 0.07 150 / 0.14), transparent 60%),
+                radial-gradient(700px 500px at 50% 120%, oklch(0.32 0.08 150 / 0.12), transparent 60%),
+                linear-gradient(180deg, oklch(0.10 0.02 150) 0%, oklch(0.07 0.015 150) 100%);
             background-attachment: fixed;
         }
 
@@ -73,16 +73,38 @@ def inject_css() -> None:
             pointer-events: none;
             opacity: .32;
             background-image:
-                linear-gradient(rgba(117,232,255,.055) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(200,164,255,.05) 1px, transparent 1px);
+                linear-gradient(oklch(0.65 0.10 150 / 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, oklch(0.55 0.10 160 / 0.06) 1px, transparent 1px);
             background-size: 48px 48px;
             mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.28));
         }
 
+        .stApp::after {
+            content: "";
+            position: fixed;
+            z-index: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            pointer-events: none;
+            opacity: .48;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+            box-shadow: 0 0 14px oklch(0.70 0.22 150 / .45);
+            animation: neo-scanline 10s linear infinite;
+        }
+
+        @keyframes neo-scanline {
+            0% { transform: translateY(-12px); opacity: 0; }
+            8% { opacity: .48; }
+            92% { opacity: .36; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
         [data-testid="stHeader"] {
-            background: rgba(12, 16, 32, .34);
+            background: oklch(0.10 0.02 150 / .58);
             backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(145,159,207,.14);
+            border-bottom: 1px solid oklch(0.30 0.04 150 / .28);
         }
 
         [data-testid="stToolbar"], [data-testid="stDecoration"] {
@@ -104,7 +126,7 @@ def inject_css() -> None:
         }
 
         [data-testid="stSidebar"] {
-            background: rgba(10, 14, 29, .84);
+            background: oklch(0.12 0.02 150 / .90);
             border-right: 1px solid var(--border);
             backdrop-filter: blur(18px);
         }
@@ -119,7 +141,7 @@ def inject_css() -> None:
         }
 
         p, li, .stMarkdown {
-            color: #d9e0f0;
+            color: oklch(0.90 0.015 150);
         }
 
         code, pre, .mono, [data-testid="stCaptionContainer"] {
@@ -141,11 +163,11 @@ def inject_css() -> None:
             height: 42px;
             display: grid;
             place-items: center;
-            border: 1px solid rgba(117,232,255,.45);
+            border: 1px solid oklch(0.70 0.22 150 / .48);
             border-radius: 10px;
             color: var(--cyan);
-            background: linear-gradient(135deg, rgba(117,232,255,.18), rgba(200,164,255,.17));
-            box-shadow: inset 0 0 22px rgba(117,232,255,.12), 0 0 22px rgba(117,232,255,.08);
+            background: linear-gradient(135deg, oklch(0.70 0.22 150 / .18), oklch(0.55 0.18 160 / .17));
+            box-shadow: inset 0 0 22px oklch(0.70 0.22 150 / .13), 0 0 22px oklch(0.70 0.22 150 / .10);
         }
 
         .brand-mark::before, .brand-mark::after {
@@ -161,7 +183,7 @@ def inject_css() -> None:
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px;
             letter-spacing: .24em;
-            color: rgba(117,232,255,.78);
+            color: oklch(0.70 0.22 150 / .86);
             text-transform: uppercase;
         }
 
@@ -170,7 +192,7 @@ def inject_css() -> None:
             font-size: 1.04rem;
             font-weight: 700;
             line-height: 1.15;
-            background: linear-gradient(135deg, #f6fbff, var(--cyan) 48%, var(--violet));
+            background: linear-gradient(135deg, oklch(0.96 0.01 150), var(--cyan) 48%, var(--violet));
             -webkit-background-clip: text;
             color: transparent;
         }
@@ -179,7 +201,7 @@ def inject_css() -> None:
             padding: .9rem 1rem;
             border-radius: 10px;
             border: 1px solid var(--border);
-            background: linear-gradient(180deg, rgba(29,36,67,.72), rgba(18,23,46,.62));
+            background: linear-gradient(180deg, oklch(0.18 0.02 150 / .88), oklch(0.13 0.02 150 / .82));
             box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
         }
 
@@ -194,7 +216,7 @@ def inject_css() -> None:
 
         .team-line {
             font-size: .79rem;
-            color: #dbe4f6;
+            color: oklch(0.90 0.02 150);
             margin: .18rem 0;
         }
 
@@ -217,14 +239,14 @@ def inject_css() -> None:
         }
 
         [data-testid="stSidebar"] [role="radiogroup"] label:hover {
-            background: rgba(38,47,83,.66);
-            border-color: rgba(117,232,255,.18);
+            background: oklch(0.20 0.02 150 / .78);
+            border-color: oklch(0.70 0.22 150 / .22);
         }
 
         [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {
-            background: linear-gradient(90deg, rgba(117,232,255,.12), rgba(200,164,255,.10));
-            border-color: rgba(117,232,255,.24);
-            box-shadow: inset 2px 0 0 var(--cyan);
+            background: linear-gradient(90deg, oklch(0.70 0.22 150 / .13), oklch(0.55 0.18 160 / .11));
+            border-color: oklch(0.70 0.22 150 / .30);
+            box-shadow: inset 2px 0 0 var(--cyan), 0 0 18px oklch(0.70 0.22 150 / .08);
         }
 
         [data-testid="stSidebar"] [role="radiogroup"] label p {
@@ -256,7 +278,7 @@ def inject_css() -> None:
             font-size: .7rem;
             text-transform: uppercase;
             letter-spacing: .28em;
-            color: rgba(117,232,255,.84);
+            color: oklch(0.70 0.22 150 / .92);
         }
 
         .page-title {
@@ -265,10 +287,10 @@ def inject_css() -> None:
             font-weight: 700;
             line-height: 1.02;
             font-size: clamp(2.25rem, 5vw, 4.2rem);
-            background: linear-gradient(135deg, #f7fbff 0%, #aef1ff 43%, #d1b5ff 78%, #eafcff 100%);
+            background: linear-gradient(135deg, oklch(0.96 0.01 150) 0%, oklch(0.75 0.16 150) 43%, oklch(0.65 0.18 160) 78%, oklch(0.91 0.05 145) 100%);
             -webkit-background-clip: text;
             color: transparent;
-            text-shadow: 0 0 32px rgba(117,232,255,.08);
+            text-shadow: 0 0 32px oklch(0.70 0.22 150 / .10);
         }
 
         .page-desc {
@@ -282,7 +304,7 @@ def inject_css() -> None:
             height: 1px;
             width: 100%;
             margin: 1.4rem 0 2rem;
-            background: linear-gradient(90deg, rgba(117,232,255,.7), rgba(200,164,255,.45), transparent 78%);
+            background: linear-gradient(90deg, oklch(0.70 0.22 150 / .72), oklch(0.55 0.18 160 / .48), transparent 78%);
         }
 
         .metric-card {
@@ -292,7 +314,7 @@ def inject_css() -> None:
             padding: 1.2rem 1.25rem;
             border-radius: 12px;
             border: 1px solid var(--border);
-            background: linear-gradient(180deg, rgba(29,36,68,.78), rgba(18,23,45,.70));
+            background: linear-gradient(180deg, oklch(0.18 0.02 150 / .90), oklch(0.13 0.02 150 / .84));
             box-shadow: inset 0 1px 0 rgba(255,255,255,.045), 0 20px 42px -30px rgba(0,0,0,.9);
         }
 
@@ -307,7 +329,7 @@ def inject_css() -> None:
 
         .metric-label {
             font-family: 'JetBrains Mono', monospace;
-            color: rgba(117,232,255,.78);
+            color: oklch(0.70 0.22 150 / .86);
             font-size: .62rem;
             letter-spacing: .22em;
             text-transform: uppercase;
@@ -327,13 +349,13 @@ def inject_css() -> None:
         .metric-rule {
             height: 1px;
             margin-top: 1rem;
-            background: linear-gradient(90deg, rgba(117,232,255,.65), transparent);
+            background: linear-gradient(90deg, oklch(0.70 0.22 150 / .68), transparent);
         }
 
         [data-testid="stVerticalBlockBorderWrapper"] {
             border: 1px solid var(--border) !important;
             border-radius: 12px !important;
-            background: linear-gradient(180deg, rgba(29,36,68,.72), rgba(17,22,43,.67)) !important;
+            background: linear-gradient(180deg, oklch(0.18 0.02 150 / .88), oklch(0.13 0.02 150 / .82)) !important;
             box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 22px 44px -34px rgba(0,0,0,.95);
             backdrop-filter: blur(12px);
         }
@@ -361,17 +383,17 @@ def inject_css() -> None:
             margin: 0 .36rem .35rem 0;
             padding: .25rem .5rem;
             border-radius: 999px;
-            border: 1px solid rgba(117,232,255,.28);
-            color: #c8f6ff;
-            background: rgba(117,232,255,.07);
+            border: 1px solid oklch(0.70 0.22 150 / .34);
+            color: oklch(0.84 0.10 150);
+            background: oklch(0.70 0.22 150 / .08);
             font-family: 'JetBrains Mono', monospace;
             font-size: .62rem;
         }
 
         .chip.violet {
-            border-color: rgba(200,164,255,.32);
-            color: #e4d3ff;
-            background: rgba(200,164,255,.08);
+            border-color: oklch(0.55 0.18 160 / .38);
+            color: oklch(0.80 0.10 160);
+            background: oklch(0.55 0.18 160 / .09);
         }
 
         .architecture {
@@ -383,8 +405,8 @@ def inject_css() -> None:
             padding: .9rem 1rem;
             border: 1px solid var(--border);
             border-radius: 9px;
-            background: rgba(14,20,42,.72);
-            color: #e7edf9;
+            background: oklch(0.12 0.02 150 / .88);
+            color: oklch(0.92 0.01 150);
             font-family: 'JetBrains Mono', monospace;
             font-size: .75rem;
             line-height: 1.55;
@@ -398,7 +420,7 @@ def inject_css() -> None:
             gap: .8rem;
             align-items: start;
             padding: .85rem 0;
-            border-bottom: 1px solid rgba(145,159,207,.14);
+            border-bottom: 1px solid oklch(0.30 0.04 150 / .28);
         }
         .concept-row:last-child { border-bottom: 0; }
         .concept-num {
@@ -406,7 +428,7 @@ def inject_css() -> None:
             color: var(--cyan);
             font-size: .68rem;
         }
-        .concept-text { color: #d9e1f2; line-height: 1.55; }
+        .concept-text { color: oklch(0.90 0.015 150); line-height: 1.55; }
 
         .content-title {
             font-family: 'Space Grotesk', sans-serif;
@@ -423,9 +445,9 @@ def inject_css() -> None:
             display: grid;
             place-items: center;
             border-radius: 50%;
-            border: 1px solid rgba(117,232,255,.45);
-            background: radial-gradient(circle, rgba(117,232,255,.13), rgba(14,20,42,.8) 68%);
-            box-shadow: inset 0 0 22px rgba(117,232,255,.1), 0 0 22px rgba(117,232,255,.08);
+            border: 1px solid oklch(0.70 0.22 150 / .48);
+            background: radial-gradient(circle, oklch(0.70 0.22 150 / .15), oklch(0.12 0.02 150 / .92) 68%);
+            box-shadow: inset 0 0 22px oklch(0.70 0.22 150 / .12), 0 0 22px oklch(0.70 0.22 150 / .10);
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
             color: var(--cyan);
@@ -440,10 +462,10 @@ def inject_css() -> None:
 
         .member-banner {
             padding: .9rem 1rem;
-            border: 1px solid rgba(117,232,255,.25);
+            border: 1px solid oklch(0.70 0.22 150 / .32);
             border-radius: 10px;
-            background: linear-gradient(90deg, rgba(117,232,255,.08), rgba(200,164,255,.06));
-            color: #dce9fb;
+            background: linear-gradient(90deg, oklch(0.70 0.22 150 / .09), oklch(0.55 0.18 160 / .07));
+            color: oklch(0.91 0.02 150);
         }
 
         .progress-row { margin: .75rem 0; }
@@ -454,19 +476,19 @@ def inject_css() -> None:
             margin-bottom: .35rem;
             font-family: 'JetBrains Mono', monospace;
             font-size: .64rem;
-            color: #dbe5f7;
+            color: oklch(0.90 0.02 150);
         }
         .progress-track {
             height: 7px;
             border-radius: 999px;
             overflow: hidden;
-            background: rgba(145,159,207,.13);
+            background: oklch(0.30 0.04 150 / .24);
         }
         .progress-fill {
             height: 100%;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--cyan), var(--violet));
-            box-shadow: 0 0 12px rgba(117,232,255,.35);
+            box-shadow: 0 0 12px oklch(0.70 0.22 150 / .42);
         }
 
         .role-card {
@@ -474,7 +496,7 @@ def inject_css() -> None:
             padding: 1.3rem;
             border: 1px solid var(--border);
             border-radius: 12px;
-            background: linear-gradient(180deg, rgba(30,37,68,.78), rgba(16,21,42,.72));
+            background: linear-gradient(180deg, oklch(0.18 0.02 150 / .90), oklch(0.12 0.02 150 / .86));
         }
         .role-name {
             font-family: 'Space Grotesk', sans-serif;
@@ -488,8 +510,8 @@ def inject_css() -> None:
         .footer-note {
             margin-top: 3rem;
             padding-top: 1rem;
-            border-top: 1px solid rgba(145,159,207,.16);
-            color: #7f89a3;
+            border-top: 1px solid oklch(0.30 0.04 150 / .30);
+            color: oklch(0.55 0.02 150);
             font-family: 'JetBrains Mono', monospace;
             font-size: .63rem;
             letter-spacing: .07em;
@@ -497,10 +519,10 @@ def inject_css() -> None:
         }
 
         div.stButton > button, div.stLinkButton > a, div[data-testid="stFormSubmitButton"] > button {
-            border: 1px solid rgba(117,232,255,.42) !important;
+            border: 1px solid oklch(0.70 0.22 150 / .48) !important;
             border-radius: 8px !important;
-            background: rgba(117,232,255,.08) !important;
-            color: #bff5ff !important;
+            background: oklch(0.70 0.22 150 / .10) !important;
+            color: oklch(0.86 0.11 150) !important;
             font-family: 'JetBrains Mono', monospace !important;
             font-size: .69rem !important;
             letter-spacing: .06em !important;
@@ -508,19 +530,19 @@ def inject_css() -> None:
         }
         div.stButton > button:hover, div.stLinkButton > a:hover, div[data-testid="stFormSubmitButton"] > button:hover {
             border-color: var(--cyan) !important;
-            background: rgba(117,232,255,.16) !important;
-            box-shadow: 0 0 22px rgba(117,232,255,.14) !important;
+            background: oklch(0.70 0.22 150 / .18) !important;
+            box-shadow: 0 0 22px oklch(0.70 0.22 150 / .20) !important;
         }
 
         button[kind="primary"] {
-            background: linear-gradient(135deg, rgba(117,232,255,.22), rgba(200,164,255,.18)) !important;
-            border-color: rgba(200,164,255,.55) !important;
+            background: linear-gradient(135deg, oklch(0.70 0.22 150 / .24), oklch(0.55 0.18 160 / .20)) !important;
+            border-color: oklch(0.55 0.18 160 / .60) !important;
         }
 
         [data-baseweb="select"] > div, [data-baseweb="input"] > div,
         [data-baseweb="textarea"] > div, [data-testid="stTextInputRootElement"] {
-            background: rgba(18,24,48,.82) !important;
-            border-color: rgba(145,159,207,.28) !important;
+            background: oklch(0.14 0.02 150 / .92) !important;
+            border-color: oklch(0.30 0.04 150 / .55) !important;
         }
 
         [data-baseweb="tab-list"] {
@@ -535,7 +557,7 @@ def inject_css() -> None:
         }
         [aria-selected="true"][data-baseweb="tab"] {
             color: var(--cyan) !important;
-            background: rgba(117,232,255,.07);
+            background: oklch(0.70 0.22 150 / .08);
         }
 
         [data-testid="stDataFrame"] {
@@ -547,7 +569,7 @@ def inject_css() -> None:
         [data-testid="stAlert"] {
             border-radius: 10px;
             border: 1px solid var(--border);
-            background: rgba(23,29,57,.78);
+            background: oklch(0.15 0.02 150 / .90);
         }
 
         @media (max-width: 800px) {
@@ -927,10 +949,20 @@ def sidebar() -> str:
         <div class="status-card" style="margin-top:1.4rem">
             <div class="status-label">Status</div>
             <div class="team-line"><span class="status-dot"></span>Streamlit prototype online</div>
-            <div class="team-line" style="color:#8d97b1;margin-top:.45rem">High-school AI learning community</div>
+            <div class="team-line" style="color:var(--muted);margin-top:.45rem">High-school AI learning community</div>
         </div>
         """,
         unsafe_allow_html=True,
+    )
+    st.sidebar.link_button(
+        "GITHUB REPOSITORY",
+        "https://github.com/qxiao2ub/ai-journal-club-app",
+        use_container_width=True,
+    )
+    st.sidebar.link_button(
+        "LIVE STREAMLIT APP",
+        "https://ai-journal-club.streamlit.app/",
+        use_container_width=True,
     )
     return page
 
@@ -1296,7 +1328,7 @@ def render_ai_brain(users: pd.DataFrame) -> None:
                     f"""
                     <div class="concept-row">
                         <div class="concept-num">{number}</div>
-                        <div><strong>{safe(title)}</strong><br><span style="color:#98a2bd">{safe(description)}</span></div>
+                        <div><strong>{safe(title)}</strong><br><span style="color:var(--muted)">{safe(description)}</span></div>
                     </div>
                     """,
                     unsafe_allow_html=True,
@@ -1401,6 +1433,19 @@ def render_portfolio() -> None:
             st.code("ai-journal-club-app", language="text")
             st.markdown("**Local launch**")
             st.code("pip install -r requirements.txt\nstreamlit run app.py", language="bash")
+            link_left, link_right = st.columns(2)
+            with link_left:
+                st.link_button(
+                    "GITHUB REPO",
+                    "https://github.com/qxiao2ub/ai-journal-club-app",
+                    use_container_width=True,
+                )
+            with link_right:
+                st.link_button(
+                    "LIVE APP",
+                    "https://ai-journal-club.streamlit.app/",
+                    use_container_width=True,
+                )
 
     with right:
         with st.container(border=True):
